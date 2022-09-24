@@ -29,10 +29,14 @@ public class RequestDropValve extends ValveBase {
 
     @Override
     public void invoke(Request request, Response response) throws IOException, ServletException {
-        if (random.nextDouble() < Double.parseDouble(rate)) {
-            response.setStatus(500);
-        } else {
-            getNext().invoke(request, response);
+        getNext().invoke(request, response);
+
+        if (response.getContentType().startsWith("application/json")) {
+            if (random.nextDouble() < Double.parseDouble(rate)) {
+                response.setStatus(500);
+                response.resetBuffer();
+                containerLog.debug("Drop");
+            }
         }
     }
 }

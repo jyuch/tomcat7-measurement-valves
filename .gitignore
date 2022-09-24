@@ -6,3 +6,6 @@ build
 
 # Ignore IntelliJ IDEA project directory
 .idea
+
+# Ignore IntelliJ IDEA HTTP request file
+*.http
